@@ -1,0 +1,2 @@
+
+<http://serverurl:4440/project/projectName/execution/renderOutput/executionId?ansicolor=on&loglevels=on|View log ouput>, job options:
