@@ -217,7 +217,7 @@ public class SlackPlugin implements NotificationPlugin {
 		// example - http://john-arthur-mbp.local:4440/project/Warehouse/execution/renderOutput/436?ansicolor=on&loglevels=on
 		boolean download = false;
 		if (!"running".equals(executionData.get("status")) && !"success".equals(executionData.get("status"))) {
-			downloadOptionBuilder.append("\n<" + jobContextMap.get("serverUrl") + "/project/" + executionData.get("project") + "/execution/renderOutput/" + executionData.get("id") + "?ansicolor=on&loglevels=on|View log ouput>");
+			downloadOptionBuilder.append("\n<" + jobContextMap.get("serverUrl") + "project/" + executionData.get("project") + "/execution/renderOutput/" + executionData.get("id") + "?ansicolor=on&loglevels=on|View log ouput>");
 			download = true;
 		}
 
@@ -315,7 +315,7 @@ public class SlackPlugin implements NotificationPlugin {
 		titleBuilder.append(jobMap.get("name"));
 		titleBuilder.append("> - <");
 		titleBuilder.append(jobContextMap.get("serverUrl"));
-		titleBuilder.append("/project/");
+		titleBuilder.append("project/");
 		titleBuilder.append(executionData.get("project"));
 		titleBuilder.append("/jobs");
 		titleBuilder.append('|');
@@ -332,7 +332,7 @@ public class SlackPlugin implements NotificationPlugin {
 
 				titleBuilder.append('<');
 				titleBuilder.append(jobContextMap.get("serverUrl"));
-				titleBuilder.append("/project/");
+				titleBuilder.append("project/");
 				titleBuilder.append(executionData.get("project"));
 				titleBuilder.append("/jobs");
 				titleBuilder.append(rootGroups);
