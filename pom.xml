@@ -7,28 +7,28 @@
 	</prerequisites>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.sbugat.slack</groupId>
+	<groupId>com.github.johnpaularthur.slack</groupId>
 	<artifactId>rundeck-slack-plugin</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.1</version>
 	<name>Rundeck slack notification plugin</name>
-	<inceptionYear>2015</inceptionYear>
-	<url>https://github.com/Sylvain-Bugat/rundeck-slack-plugin</url>
+	<inceptionYear>2016</inceptionYear>
+	<url>https://github.com/johnpaularthur/rundeck-slack-plugin</url>
 
 	<scm>
-		<url>https://github.com/Sylvain-Bugat/rundeck-slack-plugin</url>
-		<connection>scm:git:git://github.com/Sylvain-Bugat/rundeck-slack-plugin.git</connection>
-		<developerConnection>scm:git:git@github.com:Sylvain-Bugat/rundeck-slack-plugin.git</developerConnection>
+		<url>git://github.com/johnpaularthur/rundeck-slack-plugin</url>
+		<connection>scm:git:git://github.com/johnpaularthur/rundeck-slack-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:johnpaularthurrundeck-slack-plugin.git</developerConnection>
 	</scm>
 	<distributionManagement>
 		<site>
 			<id>rundeck-slack-plugin-site</id>
-			<url>scm:git:git://github.com/Sylvain-Bugat/rundeck-slack-plugin.git</url>
+			<url>scm:git:git://github.com/johnpaularthur/rundeck-slack-plugin.git</url>
 		</site>
 	</distributionManagement>
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/Sylvain-Bugat/rundeck-slack-plugin/issues</url>
+		<url>https://github.com/johnpaularthur/rundeck-slack-plugin/issues</url>
 	</issueManagement>
 
 	<licenses>
@@ -41,8 +41,13 @@
 	<developers>
 		<developer>
 			<id>sbugat</id>
-			<name>Sylvain Bugat</name>
+			<name>Sylvain Bugat (original developer)</name>
 			<url>https://github.com/Sylvain-Bugat</url>
+		</developer>
+		<developer>
+			<id>johnpaularthur</id>
+			<name>John Arthur</name>
+			<url>https://github.com/johnpaularthur</url>
 		</developer>
 	</developers>
 
@@ -67,7 +72,7 @@
 		<maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 
 		<!-- Rundeck version -->
-		<rundeck.version>2.4.2</rundeck.version>
+		<rundeck.version>2.6.6</rundeck.version>
 
 		<!-- Conflicting transitive dependencies version -->
 		<jsch.version>0.1.53</jsch.version>

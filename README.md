@@ -5,3 +5,8 @@
 [![Coverage Status](https://img.shields.io/coveralls/Sylvain-Bugat/rundeck-slack-plugin.svg)](https://coveralls.io/r/Sylvain-Bugat/rundeck-slack-plugin?branch=master)
 
 A Rundeck plugin to add job notifications into Slack.
+
+Forked from Sylvain-Bugat project, modified to work with our specific needs.
+
+Now works for rundeck 2.6.4+
+Some slack params are now driven by project or framework scope instead of Instance.

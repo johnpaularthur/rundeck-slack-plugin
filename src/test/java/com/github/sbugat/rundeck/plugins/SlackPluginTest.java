@@ -701,7 +701,8 @@ public class SlackPluginTest {
 
 		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR);
 
-		Assertions.assertThat(failedNodesAttachment).isEmpty();
+		Assertions.assertThat(failedNodesAttachment.toString()).isEqualTo(getFileContent("expected-1failed-node-list.txt"));
+
 	}
 
 	@Test

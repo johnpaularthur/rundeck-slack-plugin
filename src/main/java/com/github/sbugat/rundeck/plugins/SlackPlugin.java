@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.dtolabs.rundeck.core.plugins.Plugin;
+import com.dtolabs.rundeck.core.plugins.configuration.PropertyScope;
 import com.dtolabs.rundeck.plugins.ServiceNameConstants;
 import com.dtolabs.rundeck.plugins.descriptions.PluginDescription;
 import com.dtolabs.rundeck.plugins.descriptions.PluginProperty;
@@ -37,16 +38,16 @@ public class SlackPlugin implements NotificationPlugin {
 
 	private final Logger logger = Logger.getLogger(SlackPlugin.class.getName());
 
-	@PluginProperty(title = "Incoming WebHook URL", description = "Slack incoming WebHook URL", required = true)
+	@PluginProperty(title = "Incoming WebHook URL", description = "Slack incoming WebHook URL", required = true, scope = PropertyScope.Project)
 	private String slackIncomingWebHookUrl;
 
-	@PluginProperty(title = "WebHook channel", description = "Override default WebHook channel (#channel")
+	@PluginProperty(title = "WebHook channel", description = "Override default WebHook channel (#channel)", scope = PropertyScope.Instance)
 	private String slackOverrideDefaultWebHookChannel;
 
-	@PluginProperty(title = "WebHook name", description = "Override default WebHook name")
+	@PluginProperty(title = "WebHook name", description = "Override default WebHook name", scope = PropertyScope.Project)
 	private String slackOverrideDefaultWebHookName;
 
-	@PluginProperty(title = "WebHook emoji", description = "Override default WebHook icon (:emoji:)")
+	@PluginProperty(title = "WebHook emoji", description = "Override default WebHook icon (:emoji:)", scope = PropertyScope.Instance)
 	private String slackOverrideDefaultWebHookEmoji;
 
 	private URLTools uRLTools = new URLTools();
@@ -216,7 +217,7 @@ public class SlackPlugin implements NotificationPlugin {
 		// example - http://john-arthur-mbp.local:4440/project/Warehouse/execution/renderOutput/436?ansicolor=on&loglevels=on
 		boolean download = false;
 		if (!"running".equals(executionData.get("status")) && !"success".equals(executionData.get("status"))) {
-			downloadOptionBuilder.append("\n<" + jobContextMap.get("serverUrl") + "project/" + executionData.get("project") + "/execution/renderOutput/" + executionData.get("id") + "?ansicolor=on&loglevels=on|View log ouput>");
+			downloadOptionBuilder.append("\n<" + jobContextMap.get("serverUrl") + "/project/" + executionData.get("project") + "/execution/renderOutput/" + executionData.get("id") + "?ansicolor=on&loglevels=on|View log ouput>");
 			download = true;
 		}
 
@@ -314,7 +315,7 @@ public class SlackPlugin implements NotificationPlugin {
 		titleBuilder.append(jobMap.get("name"));
 		titleBuilder.append("> - <");
 		titleBuilder.append(jobContextMap.get("serverUrl"));
-		titleBuilder.append("project/");
+		titleBuilder.append("/project/");
 		titleBuilder.append(executionData.get("project"));
 		titleBuilder.append("/jobs");
 		titleBuilder.append('|');
@@ -331,7 +332,7 @@ public class SlackPlugin implements NotificationPlugin {
 
 				titleBuilder.append('<');
 				titleBuilder.append(jobContextMap.get("serverUrl"));
-				titleBuilder.append("project/");
+				titleBuilder.append("/project/");
 				titleBuilder.append(executionData.get("project"));
 				titleBuilder.append("/jobs");
 				titleBuilder.append(rootGroups);
@@ -419,7 +420,7 @@ public class SlackPlugin implements NotificationPlugin {
 			totalNodes = 0;
 		}
 
-		// Failed node part if a node is failed and if it's not the only one node executed
+		// Failed node part if a node is failed
 		if (null != failedNodeList && !failedNodeList.isEmpty() && totalNodes > 0) {
 			messageBuilder.append(",{");
 			messageBuilder.append("\"fallback\":\"Failed nodes list\",");
