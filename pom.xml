@@ -129,9 +129,16 @@
 			<groupId>org.rundeck</groupId>
 			<artifactId>rundeck-core</artifactId>
 			<version>${rundeck.version}</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 
-		<!-- Test Dependencies (Junit, Mockito, Guava) -->
+        <!-- Test Dependencies (Junit, Mockito, Guava) -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -282,7 +289,7 @@
 				<configuration>
 					<archive>
 						<manifestEntries>
-							<Rundeck-Plugin-Classnames>com.github.sbugat.rundeck.plugins.SlackPlugin</Rundeck-Plugin-Classnames>
+							<Rundeck-Plugin-Classnames>com.github.johnpaularthur.rundeck.plugins.SlackPlugin</Rundeck-Plugin-Classnames>
 							<Rundeck-Plugin-Version>1.1</Rundeck-Plugin-Version>
 							<Rundeck-Plugin-Archive>true</Rundeck-Plugin-Archive>
 							<Rundeck-Plugin-File-Version>${project.version}</Rundeck-Plugin-File-Version>
