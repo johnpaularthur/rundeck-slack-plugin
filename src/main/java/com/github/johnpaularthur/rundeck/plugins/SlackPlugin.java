@@ -1,4 +1,4 @@
-package com.github.sbugat.rundeck.plugins;
+package com.github.johnpaularthur.rundeck.plugins;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
