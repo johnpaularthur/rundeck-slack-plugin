@@ -36,6 +36,7 @@ public class SlackPluginTest {
 
 	private static final String NODE_1 = "1node1";
 	private static final String NODE_2 = "2node2";
+	private static final String ENVNAME = "dev";
 
 	private static final String OPTION_1 = "option1";
 	private static final String OPTION_1_VALUE = "value1";
@@ -185,7 +186,7 @@ public class SlackPluginTest {
 
 		final Map<String, Object> executionData = ImmutableMap.of();
 		
-		final String message = (String) callMethod(slackPlugin, "getMessage", "start", executionData );
+		final String message = (String) callMethod(slackPlugin, "getMessage", "start", executionData, ENVNAME);
 		Assertions.assertThat(message).isEqualTo(getFileContent("expected-message-start.txt"));
 	}
 	
@@ -194,7 +195,7 @@ public class SlackPluginTest {
 
 		final Map<String, Object> executionData = ImmutableMap.of();
 		
-		final String message = (String) callMethod(slackPlugin, "getMessage", "failure", executionData );
+		final String message = (String) callMethod(slackPlugin, "getMessage", "failure", executionData, ENVNAME);
 		Assertions.assertThat(message).isEqualTo(getFileContent("expected-message-failure.txt"));
 	}
 	
@@ -204,6 +205,7 @@ public class SlackPluginTest {
 		setField(slackPlugin, "slackOverrideDefaultWebHookChannel", "#general");
 		setField(slackPlugin, "slackOverrideDefaultWebHookName", "Rundeck");
 		setField(slackPlugin, "slackOverrideDefaultWebHookEmoji", ":beer:");
+		setField(slackPlugin, "rundeckServerEnvironmentName", ENVNAME);
 		
 		final Map<String, String> optionContextMap = ImmutableMap.of(OPTION_1, OPTION_1_VALUE);
 		final Map<String, String> jobContextMap = ImmutableMap.of("serverUrl", "http://serverurl:4440/");
@@ -231,7 +233,7 @@ public class SlackPluginTest {
 		executionDataMap.put("nodestatus", nodeStatus);
 		final Map<String, Object> executionData = ImmutableMap.copyOf(executionDataMap);
 		
-		final String message = (String) callMethod(slackPlugin, "getMessage", "failure", executionData );
+		final String message = (String) callMethod(slackPlugin, "getMessage", "failure", executionData, ENVNAME);
 		Assertions.assertThat(message).isEqualTo(getFileContent("expected-message-complete.txt"));
 	}
 	
@@ -686,7 +688,7 @@ public class SlackPluginTest {
 
 		final Map<String, Object> executionData = ImmutableMap.of();
 
-		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR);
+		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR, ENVNAME);
 
 		Assertions.assertThat(failedNodesAttachment).isEmpty();
 	}
@@ -699,7 +701,7 @@ public class SlackPluginTest {
 
 		final Map<String, Object> executionData = ImmutableMap.of("failedNodeList", failedNodeList, "nodestatus", nodeStatus);
 
-		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR);
+		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR, ENVNAME);
 
 		Assertions.assertThat(failedNodesAttachment.toString()).isEqualTo(getFileContent("expected-1failed-node-list.txt"));
 
@@ -713,7 +715,7 @@ public class SlackPluginTest {
 
 		final Map<String, Object> executionData = ImmutableMap.of("failedNodeList", failedNodeList, "nodestatus", nodeStatus);
 
-		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR);
+		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR, ENVNAME);
 
 		Assertions.assertThat(failedNodesAttachment).isEmpty();
 	}
@@ -726,7 +728,7 @@ public class SlackPluginTest {
 
 		final Map<String, Object> executionData = ImmutableMap.of("failedNodeList", failedNodeList, "nodestatus", nodeStatus);
 
-		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR);
+		final CharSequence failedNodesAttachment = (CharSequence) callStaticMethod(SlackPlugin.class, "getFailedNodesAttachment", executionData, SlackPlugin.SLACK_SUCCESS_COLOR, ENVNAME);
 
 		Assertions.assertThat(failedNodesAttachment.toString()).isEqualTo(getFileContent("expected-2failed-nodes-list.txt"));
 	}

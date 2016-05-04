@@ -50,6 +50,9 @@ public class SlackPlugin implements NotificationPlugin {
 	@PluginProperty(title = "WebHook emoji", description = "Override default WebHook icon (:emoji:)", scope = PropertyScope.Instance)
 	private String slackOverrideDefaultWebHookEmoji;
 
+    @PluginProperty(title = "Environment name", description = "Provides an environment name. e.g prod, qa, dev, etc", scope = PropertyScope.Project)
+    private String rundeckServerEnvironmentName;
+
 	private URLTools uRLTools = new URLTools();
 
 	@Override
@@ -80,7 +83,7 @@ public class SlackPlugin implements NotificationPlugin {
 			connection.setDoOutput(true);
 
 			// Send the WebHook message
-			final String messagePayload = getMessage(trigger, executionData);
+			final String messagePayload = getMessage(trigger, executionData, rundeckServerEnvironmentName);
 			DataOutputStream dataOutputStream = null;
 			try {
 				dataOutputStream = new DataOutputStream(connection.getOutputStream());
@@ -128,12 +131,11 @@ public class SlackPlugin implements NotificationPlugin {
 	 * @param executionData data of the current execution state
 	 * @return complete message
 	 */
-	private String getMessage( final String trigger, @SuppressWarnings("rawtypes") final Map executionData ) {
-		
+	private String getMessage( final String trigger, @SuppressWarnings("rawtypes") final Map executionData, final String envName) {
 		final StringBuilder messageBuilder = new StringBuilder();
 		messageBuilder.append('{');
 		getOptions(messageBuilder);
-		getAttachmentsPart(messageBuilder, trigger, executionData);
+		getAttachmentsPart(messageBuilder, trigger, executionData, envName);
 		messageBuilder.append('}');
 		
 		return messageBuilder.toString();
@@ -167,7 +169,7 @@ public class SlackPlugin implements NotificationPlugin {
 	 * @param trigger execution status
 	 * @param executionData current execution state
 	 */
-	private static void getAttachmentsPart(final StringBuilder messageBuilder, final String trigger, @SuppressWarnings("rawtypes") final Map executionData) {
+	private static void getAttachmentsPart(final StringBuilder messageBuilder, final String trigger, @SuppressWarnings("rawtypes") final Map executionData, final String envName) {
 
 		// Success and starting execution are good(green)
 		final String statusColor;
@@ -195,9 +197,9 @@ public class SlackPlugin implements NotificationPlugin {
 		messageBuilder.append('}');
 
 		// Succeeded nodes section
-		messageBuilder.append(getSucceededNodesAttachment(executionData, statusColor));
+		messageBuilder.append(getSucceededNodesAttachment(executionData, statusColor, envName));
 		// Failed nodes section
-		messageBuilder.append(getFailedNodesAttachment(executionData, statusColor));
+		messageBuilder.append(getFailedNodesAttachment(executionData, statusColor, envName));
 
 		messageBuilder.append(']');
 	}
@@ -404,7 +406,7 @@ public class SlackPlugin implements NotificationPlugin {
 	 * @param statusColor status color to display
 	 * @return char sequence containing the formated section
 	 */
-	private static CharSequence getFailedNodesAttachment(@SuppressWarnings("rawtypes") final Map executionData, final String statusColor) {
+	private static CharSequence getFailedNodesAttachment(@SuppressWarnings("rawtypes") final Map executionData, final String statusColor, final String envName) {
 
 		final StringBuilder messageBuilder = new StringBuilder();
 
@@ -440,7 +442,10 @@ public class SlackPlugin implements NotificationPlugin {
 				messageBuilder.append("{");
 
 				messageBuilder.append("\"title\":\"");
-				messageBuilder.append(failedNode);
+                messageBuilder.append(failedNode);
+                messageBuilder.append("(");
+                messageBuilder.append(envName);
+                messageBuilder.append(")");
 				messageBuilder.append("\",");
 				messageBuilder.append("\"short\":true");
 
@@ -463,7 +468,7 @@ public class SlackPlugin implements NotificationPlugin {
 	 * @param statusColor status color to display
 	 * @return char sequence containing the formated section
 	 */
-	private static CharSequence getSucceededNodesAttachment(@SuppressWarnings("rawtypes") final Map executionData, final String statusColor) {
+	private static CharSequence getSucceededNodesAttachment(@SuppressWarnings("rawtypes") final Map executionData, final String statusColor, final String envName) {
 
 		final StringBuilder messageBuilder = new StringBuilder();
 
@@ -500,6 +505,9 @@ public class SlackPlugin implements NotificationPlugin {
 
 				messageBuilder.append("\"title\":\"");
 				messageBuilder.append(succeededNode);
+                messageBuilder.append("(");
+                messageBuilder.append(envName);
+                messageBuilder.append(")");
 				messageBuilder.append("\",");
 				messageBuilder.append("\"short\":true");
 

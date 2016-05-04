@@ -1,1 +1,1 @@
-,{"fallback":"Failed nodes list","text":"Failed nodes:","color":"good","fields":[{"title":"1node1","short":true}]}
+,{"fallback":"Failed nodes list","text":"Failed nodes:","color":"good","fields":[{"title":"1node1(dev)","short":true}]}
